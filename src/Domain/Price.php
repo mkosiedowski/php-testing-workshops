@@ -4,7 +4,7 @@ namespace Domain;
 
 class Price
 {
-    /** @var int */
+    /** @var float */
     private $value;
 
     /** @var string */
@@ -13,19 +13,19 @@ class Price
     /**
      * Price constructor.
      *
-     * @param int $value
+     * @param float $value
      * @param string $currency
      */
-    public function __construct(int $value, string $currency)
+    public function __construct(float $value, string $currency)
     {
         $this->value = $value;
         $this->currency = $currency;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getValue(): int
+    public function getValue(): float
     {
         return $this->value;
     }
