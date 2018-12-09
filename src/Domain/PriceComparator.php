@@ -23,8 +23,8 @@ class PriceComparator
      *  0 if prices are equal
      *  -1 if $price1 is lower than $price2
      *
-     * @param Price $price1
-     * @param Price $price2
+     * @param  Price $price1
+     * @param  Price $price2
      * @return int
      */
     public function compare(Price $price1, Price $price2): int
