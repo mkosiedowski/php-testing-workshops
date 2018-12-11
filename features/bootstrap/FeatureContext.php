@@ -39,7 +39,7 @@ class FeatureContext implements Context
     /**
      * @When I add item to this basket
      */
-    public function iAddItemsToThisBasket()
+    public function iAddItemToThisBasket()
     {
         $item = new Item('some item', new Price(100, 'PLN'));
 
@@ -49,8 +49,41 @@ class FeatureContext implements Context
     /**
      * @Then Basket should contain one item
      */
-    public function basketShouldContainItems()
+    public function basketShouldContainItem()
     {
         Assertion::eq($this->basketManager->countItems(), 1);
+    }
+
+    /**
+     * @When I add item with name :name and price :price
+     * @param string $name
+     * @param string $price
+     */
+    public function iAddItemWithNameAndPrice(string $name, string $price)
+    {
+        [$priceValue, $priceCurrency] = explode(' ', $price);
+        $item = new Item($name, new Price($priceValue, $priceCurrency));
+
+        $this->basketManager->addItem($item);
+    }
+
+    /**
+     * @Then Basket should contain :count items
+     * @param int $count
+     */
+    public function basketShouldContainItems2(int $count)
+    {
+        Assertion::eq($this->basketManager->countItems(), $count);
+    }
+
+    /**
+     * @Then Sum of all items in basket should be :basketSum
+     * @param string $basketSum
+     */
+    public function sumOfAllItemsInBasketShouldBe(string $basketSum)
+    {
+        [$sumValue, $sumCurrency] = explode(' ', $basketSum);
+
+        Assertion::eq($this->basketManager->getValue($sumCurrency), $sumValue);
     }
 }
