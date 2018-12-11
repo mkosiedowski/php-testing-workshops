@@ -2,17 +2,19 @@
 
 use Behat\Behat\Context\Context;
 use Domain\Basket;
+use Domain\BasketManager;
 use Domain\Item;
 use Domain\Price;
 use Assert\Assertion;
+use Infrastructure\NBPPriceConverter;
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext implements Context
 {
-    /** @var Basket */
-    private $basket;
+    /** @var BasketManager */
+    private $basketManager;
 
     /**
      * Initializes context.
@@ -23,6 +25,7 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
+        $this->basketManager = new BasketManager(new NBPPriceConverter());
     }
 
     /**
@@ -30,7 +33,7 @@ class FeatureContext implements Context
      */
     public function iHaveEmptyBasket()
     {
-        $this->basket = new Basket();
+        $this->basketManager->setBasket(new Basket());
     }
 
     /**
@@ -38,8 +41,9 @@ class FeatureContext implements Context
      */
     public function iAddItemsToThisBasket()
     {
-        $item = new Item('costam', new Price(100, 'PLN'));
-        $this->basket->addItem($item);
+        $item = new Item('some item', new Price(100, 'PLN'));
+
+        $this->basketManager->addItem($item);
     }
 
     /**
@@ -47,6 +51,6 @@ class FeatureContext implements Context
      */
     public function basketShouldContainItems()
     {
-        Assertion::count($this->basket->getItems(), 1);
+        Assertion::eq($this->basketManager->countItems(), 1);
     }
 }
