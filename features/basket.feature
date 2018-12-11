@@ -17,8 +17,14 @@ Feature: Basket management
 
   Scenario: Remove item from basket
     Given I have empty basket
-    When I add item with name "first" and price "20 PLN"
-    And I add item with name "second" and price "50 PLN"
-    But I remove item with name "first"
+    And I have item with name "first" and price "20 PLN" in this basket
+    And I have item with name "second" and price "50 PLN" in this basket
+    When I remove item with name "first"
     Then Basket should contain "1" items
     And Sum of all items in basket should be "50 PLN"
+
+  Scenario: Convert item prices with different currencies
+    Given I have empty basket
+    When I add item with name "first" and price "20 EUR"
+    And I add item with name "second" and price "50 CHF"
+    Then Sum of all items in "PLN" currency should be correct

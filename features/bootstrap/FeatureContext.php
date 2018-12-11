@@ -57,6 +57,7 @@ class FeatureContext implements Context
 
     /**
      * @When I add item with name :name and price :price
+     * @Given I have item with name :name and price :price in this basket
      * @param string $name
      * @param string $price
      */
@@ -72,7 +73,7 @@ class FeatureContext implements Context
      * @Then Basket should contain :count items
      * @param int $count
      */
-    public function basketShouldContainItems2(int $count)
+    public function basketShouldContainItems(int $count)
     {
         Assertion::eq($this->basketManager->countItems(), $count);
     }
@@ -95,5 +96,17 @@ class FeatureContext implements Context
     public function iRemoveItemWithName(string $itemName)
     {
         $this->basketManager->removeItem($itemName);
+    }
+
+    /**
+     * @Then Sum of all items in :currency currency should be correct
+     * @param string $currency
+     */
+    public function sumOfAllItemsInCurrencyShouldBeCorrect(string $currency)
+    {
+        $convertedBasketValue = $this->basketManager->getValue($currency);
+
+        Assertion::numeric($convertedBasketValue);
+        Assertion::greaterThan($convertedBasketValue, 0);
     }
 }
