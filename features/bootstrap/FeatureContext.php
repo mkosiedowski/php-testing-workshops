@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Domain\Basket;
 use Domain\BasketManager;
@@ -85,5 +86,14 @@ class FeatureContext implements Context
         [$sumValue, $sumCurrency] = explode(' ', $basketSum);
 
         Assertion::eq($this->basketManager->getValue($sumCurrency), $sumValue);
+    }
+
+    /**
+     * @When I remove item with name :itemName
+     * @param string $itemName
+     */
+    public function iRemoveItemWithName(string $itemName)
+    {
+        $this->basketManager->removeItem($itemName);
     }
 }
