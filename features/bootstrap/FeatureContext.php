@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Domain\Basket;
 use Domain\BasketManager;
@@ -56,6 +57,7 @@ class FeatureContext implements Context
 
     /**
      * @When I add item with name :name and price :price
+     * @Given I have item with name :name and price :price in this basket
      * @param string $name
      * @param string $price
      */
@@ -71,7 +73,7 @@ class FeatureContext implements Context
      * @Then Basket should contain :count items
      * @param int $count
      */
-    public function basketShouldContainItems2(int $count)
+    public function basketShouldContainItems(int $count)
     {
         Assertion::eq($this->basketManager->countItems(), $count);
     }
@@ -85,5 +87,14 @@ class FeatureContext implements Context
         [$sumValue, $sumCurrency] = explode(' ', $basketSum);
 
         Assertion::eq($this->basketManager->getValue($sumCurrency), $sumValue);
+    }
+
+    /**
+     * @When I remove item with name :itemName
+     * @param string $itemName
+     */
+    public function iRemoveItemWithName(string $itemName)
+    {
+        $this->basketManager->removeItem($itemName);
     }
 }
