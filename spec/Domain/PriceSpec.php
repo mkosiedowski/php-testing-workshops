@@ -9,6 +9,6 @@ class PriceSpec extends ObjectBehavior
     public function it_should_return_value()
     {
         $this->beConstructedWith(1000, 'EUR');
-        $this->getValue()->shouldReturn(1000);
+        $this->getValue()->shouldReturn(1000.0);
     }
 }
