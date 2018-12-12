@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="MyProject" default="run">
     <target name="phpspec">
-        <exec executable="bin/phpspec" passthru="true" checkreturn="true">
-            <arg line="run"/>
+        <exec executable="phpdbg" passthru="true" checkreturn="true">
+            <arg line="-qrr bin/phpspec run --format=pretty"/>
         </exec>
     </target>
     <target name="behat">
